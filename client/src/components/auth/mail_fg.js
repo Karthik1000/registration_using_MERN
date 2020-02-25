@@ -2,21 +2,20 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import { mail_fg } from '../../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Mail_fg = ({ mail_fg, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: ''
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async e => {
     e.preventDefault();
-    login(email, password);
+    mail_fg(email);
   };
 
   //Redirect if logged in
@@ -27,9 +26,9 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign In</h1>
+      <h1 className='large text-primary'>Forgot password</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i>Sign Into Your Account
+        <i className='fas fa-user'></i>If you have forgot password please enter your mail '(1st step)'
       </p>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
@@ -42,7 +41,7 @@ const Login = ({ login, isAuthenticated }) => {
             required
           />
         </div>
-        <div className='form-group'>
+        {/* <div className='form-group'>
           <input
             type='password'
             placeholder='Password'
@@ -51,21 +50,21 @@ const Login = ({ login, isAuthenticated }) => {
             value={password}
             onChange={e => onChange(e)}
           />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Login' />
+        </div> */}
+        <input type='submit' className='btn btn-primary' value='Send' />
       </form>
-      <p className='my-1'>
+      {/* <p className='my-1'>
         Donot have an account? <Link to='/register'>Sign Up</Link>
       </p>
       <p className='my-2'>
-        Forgot password? <Link to='/fg_mail'>forgotpassword</Link>
-      </p>
+        Forgot password? <Link to='/forgotpassword'>forgotpassword</Link>
+      </p> */}
     </Fragment>
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+Mail_fg.propTypes = {
+  mail_fg: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -75,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { login }
-)(Login);
+  { mail_fg }
+)(Mail_fg);

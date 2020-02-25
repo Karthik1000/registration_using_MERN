@@ -6,7 +6,9 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
+  FG_SUCCESS,
   LOGIN_FAIL,
+  FG_FAIL,
   LOGOUT
 } from './types';
 
@@ -96,6 +98,71 @@ export const login = (email, password) => async dispatch => {
     });
   }
 };
+//forgot password / clear profile
+export const for_pass = (email, password) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post('/api/fg', body, config);
+
+    dispatch({
+      type: FG_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: FG_FAIL
+    });
+  }
+};
+
+//mail_send for forgot password
+export const mail_fg = (email) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ email });
+
+  try {
+    const res = await axios.post('/api/mail_sender', body, config);
+
+    dispatch({
+      type: 'please wait.. email sent successfully...',
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: 'mail sending failed..'
+    });
+  }
+};
+
+
 
 //Logout  /Clear Profile
 export const logout = () => dispatch => {

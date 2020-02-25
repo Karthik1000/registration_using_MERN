@@ -2,9 +2,9 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import { for_pass } from '../../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const For_pass = ({ for_pass, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -16,20 +16,20 @@ const Login = ({ login, isAuthenticated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async e => {
     e.preventDefault();
-    login(email, password);
+    for_pass(email, password);
   };
 
   //Redirect if logged in
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/login' />;
   }
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign In</h1>
+      <h1 className='large text-primary'>Forgot Password</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i>Sign Into Your Account
+        <i className='fas fa-user'></i>Please enter your mail again and change your password correctly... '(2nd step)'
       </p>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
@@ -52,20 +52,15 @@ const Login = ({ login, isAuthenticated }) => {
             onChange={e => onChange(e)}
           />
         </div>
-        <input type='submit' className='btn btn-primary' value='Login' />
+        <input type='submit' className='btn btn-primary' value='Confirm' />
       </form>
-      <p className='my-1'>
-        Donot have an account? <Link to='/register'>Sign Up</Link>
-      </p>
-      <p className='my-2'>
-        Forgot password? <Link to='/fg_mail'>forgotpassword</Link>
-      </p>
+      
     </Fragment>
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+For_pass.propTypes = {
+  for_pass: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -75,5 +70,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { login }
-)(Login);
+  { for_pass }
+)(For_pass);

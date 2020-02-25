@@ -29,6 +29,8 @@ app.use('/api/auth', require('./routes/api/auth'));
 
 app.use('/api/fg', require('./routes/api/fg'));
 
+app.use('/api/mail_sender', require('./routes/api/mail_sender'));
+
 //const route = require('./routes/api/users');
 //app.use('/users', route);
 
